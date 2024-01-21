@@ -9,14 +9,16 @@ public class User {
     private final String userName;
     private final List<String> posts;
     private final List<User> followUsers;
+    private final List<String> receiveMentions;
 
     public User(String userName) {
         this.userName = userName;
         this.posts = new ArrayList<>();
         this.followUsers = new ArrayList<>();
+        this.receiveMentions = new ArrayList<>();
     }
 
-    public String getUserName(){
+    public String getUserName() {
         return this.userName;
     }
 
@@ -40,5 +42,13 @@ public class User {
         List<String> followUsersPosts = new ArrayList<>();
         followUsers.forEach(followUser -> followUsersPosts.addAll(followUser.fetchAllPost()));
         return followUsersPosts;
+    }
+
+    public void addReceiveMentions(String mention) {
+        this.receiveMentions.add(mention);
+    }
+
+    public List<String> fetchAllReceiveMentions() {
+        return this.receiveMentions;
     }
 }
