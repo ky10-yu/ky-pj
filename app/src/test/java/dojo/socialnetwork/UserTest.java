@@ -95,4 +95,19 @@ public class UserTest {
         List<String> expected = List.of("https://socialnetwork/share_posts?user=ALICE&postIndex=0");
         assertEquals(expected, thomas.fetchAllPost());
     }
+
+    // Direct Messages: Alice can send a private message to Thomas
+    @Test
+    public void directMessageFunctionTest() {
+        UserManagement userManagement = new UserManagement();
+        User thomas = new User("THOMAS");
+        User alice = new User("ALICE");
+        userManagement.addUser(thomas);
+        userManagement.addUser(alice);
+
+        alice.sendDirectMessage(thomas, "direct message");
+
+        List<String> expected = List.of("direct message");
+        assertEquals(expected, thomas.fetchDirectMessages(alice.getUserName()));
+    }
 }
