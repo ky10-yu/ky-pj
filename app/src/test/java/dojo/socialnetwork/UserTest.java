@@ -108,6 +108,7 @@ public class UserTest {
         alice.sendDirectMessage(thomas, "direct message");
 
         List<String> expected = List.of("direct message");
+        assertEquals(expected, alice.fetchDirectMessages(thomas.getUserName()));
         assertEquals(expected, thomas.fetchDirectMessages(alice.getUserName()));
     }
 }

@@ -1,6 +1,7 @@
 package dojo.socialnetwork;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class User {
@@ -8,12 +9,14 @@ public class User {
     private final List<String> posts;
     private final List<User> followUsers;
     private final List<String> receiveMentions;
+    private final List<DirectMessage> directMessageThreads;
 
     public User(String userName) {
         this.userName = userName;
         this.posts = new ArrayList<>();
         this.followUsers = new ArrayList<>();
         this.receiveMentions = new ArrayList<>();
+        this.directMessageThreads = new ArrayList<>();
     }
 
     public String getUserName() {
@@ -57,5 +60,29 @@ public class User {
         }
         String url = String.format("https://socialnetwork/share_posts?user=%s&postIndex=%d", user.getUserName(), postIndex);
         post(url);
+    }
+
+    public List<DirectMessage> getDirectMessageThreads() {
+        return this.directMessageThreads;
+    }
+
+    public void sendDirectMessage(User user, String message) {
+        String receiverUserName = user.getUserName();
+        DirectMessage senderDirectMessage = this.directMessageThreads.stream().filter(dm -> receiverUserName.equals(dm.getToUserName())).findFirst().orElse(new DirectMessage(receiverUserName));
+        senderDirectMessage.addMessages(message);
+        this.directMessageThreads.add(senderDirectMessage);
+
+        String senderUserName = this.userName;
+        DirectMessage receiverDirectMessage = user.getDirectMessageThreads().stream().filter(dm -> senderUserName.equals(dm.getToUserName())).findFirst().orElse(new DirectMessage(senderUserName));
+        receiverDirectMessage.addMessages(message);
+        user.getDirectMessageThreads().add(receiverDirectMessage);
+    }
+
+    public List<String> fetchDirectMessages(String toUserName) {
+        DirectMessage directMessage = this.directMessageThreads.stream().filter(dm -> toUserName.equals(dm.getToUserName())).findFirst().orElse(null);
+        if(directMessage == null) {
+            return Collections.emptyList();
+        }
+        return directMessage.getMessages();
     }
 }
