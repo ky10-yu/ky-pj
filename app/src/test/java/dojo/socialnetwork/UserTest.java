@@ -32,4 +32,21 @@ public class UserTest {
         List<String> expected = List.of("thomas post publish message");
         assertEquals(expected, posts);
     }
+
+    // Following: Charlie can subscribe to Thomas’s and Alice’s messages, and view an aggregated list of all subscriptions.
+    @Test
+    public void followingFunctionTest() {
+        User thomas = new User("THOMAS");
+        User alice = new User("ALICE");
+        User charlie = new User("CHARLIE");
+        thomas.post("thomas post publish message");
+        alice.post("alice post publish message");
+        charlie.follow(thomas);
+        charlie.follow(alice);
+
+        List<String> posts = charlie.fetchAllFollowUsersPosts();
+
+        List<String> expected = List.of("thomas post publish message", "alice post publish message");
+        assertEquals(expected, posts);
+    }
 }
