@@ -19,4 +19,17 @@ public class UserTest {
         List<String> expected = List.of("post publish message");
         assertEquals(expected, posts);
     }
+
+    // Reading: Alice can view all Thomas’s messages.
+    @Test
+    public void readOtherUsersPostsFunctionTest() {
+        User thomas = new User("THOMAS");
+        User alice = new User("ALICE");
+        thomas.post("thomas post publish message");
+
+        List<String> posts = alice.fetchOtherUsersPosts(thomas);
+
+        List<String> expected = List.of("thomas post publish message");
+        assertEquals(expected, posts);
+    }
 }
