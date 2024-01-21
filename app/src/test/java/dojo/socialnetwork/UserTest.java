@@ -49,4 +49,17 @@ public class UserTest {
         List<String> expected = List.of("thomas post publish message", "alice post publish message");
         assertEquals(expected, posts);
     }
+
+    // Mentions: Alice can mention Charlie in a message using “@” like “@Charlie”
+    @Test
+    public void followingFunctionTest() {
+        User alice = new User("ALICE");
+        User charlie = new User("CHARLIE");
+        alice.post("@CHARLIE follow me");
+
+        List<String> mentions = charlie.fetchMentions();
+
+        List<String> expected = List.of("@CHARLIE follow me");
+        assertEquals(expected, mentions);
+    }
 }
