@@ -3,6 +3,7 @@ package dojo.socialnetwork;
 import jdk.jfr.DataAmount;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 
 public class User {
@@ -50,5 +51,14 @@ public class User {
 
     public List<String> fetchAllReceiveMentions() {
         return this.receiveMentions;
+    }
+
+    public void shareLink(User user, int postIndex) {
+        if (user.fetchAllPost().size() < postIndex + 1) {
+            System.out.print("There is no post with this index number");
+            return;
+        }
+        String url = String.format("https://socialnetwork/share_posts?user=%s&postIndex=%d", user.getUserName(), postIndex);
+        post(url);
     }
 }
