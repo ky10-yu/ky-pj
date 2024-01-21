@@ -52,14 +52,16 @@ public class UserTest {
 
     // Mentions: Alice can mention Charlie in a message using “@” like “@Charlie”
     @Test
-    public void followingFunctionTest() {
+    public void mentionFunctionTest() {
+        UserManagement userManagement= new UserManagement();
         User alice = new User("ALICE");
         User charlie = new User("CHARLIE");
-        alice.post("@CHARLIE follow me");
-
-        List<String> mentions = charlie.fetchMentions();
+        userManagement.addUser(alice);
+        userManagement.addUser(charlie);
+        userManagement.post(alice, "@CHARLIE follow me");
 
         List<String> expected = List.of("@CHARLIE follow me");
-        assertEquals(expected, mentions);
+        assertEquals(expected, charlie.fetchAllReceiveMentions());
+        assertEquals(expected, alice.fetchAllPost());
     }
 }
