@@ -55,7 +55,7 @@ public class UserTest {
     // Mentions: Alice can mention Charlie in a message using “@” like “@Charlie”
     @Test
     public void mentionFunctionTest() {
-        UserManagement userManagement= new UserManagement();
+        UserManagement userManagement = new UserManagement();
         User alice = new User("ALICE");
         User charlie = new User("CHARLIE");
         userManagement.addUser(alice);
@@ -69,7 +69,7 @@ public class UserTest {
 
     @Test
     public void mentionedUserIsNotExistsTest() {
-        UserManagement userManagement= new UserManagement();
+        UserManagement userManagement = new UserManagement();
         User alice = new User("ALICE");
         User charlie = new User("CHARLIE");
         userManagement.addUser(alice);
@@ -79,5 +79,21 @@ public class UserTest {
         List<String> expected = List.of("@NOBODY follow me");
         assertEquals(Collections.emptyList(), charlie.fetchAllReceiveMentions());
         assertEquals(expected, alice.fetchAllPost());
+    }
+
+    // Links: Thomas can share a link to a message
+    @Test
+    public void shareLinkFunctionTest() {
+        UserManagement userManagement = new UserManagement();
+        User thomas = new User("THOMAS");
+        User alice = new User("ALICE");
+        userManagement.addUser(thomas);
+        userManagement.addUser(alice);
+        alice.post("alice post publish message");
+
+        thomas.shareLink(alice, 1);
+
+        List<String> expected = List.of("https://socialnetwork/share_posts?user=alice&postIndex=0");
+        assertEquals(expected, thomas.fetchAllPost());
     }
 }
