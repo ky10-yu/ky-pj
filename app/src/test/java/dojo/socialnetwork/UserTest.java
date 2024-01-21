@@ -10,7 +10,7 @@ public class UserTest {
 
     // Posting: Thomas can publish messages a message.
     @Test
-    void postFunctionTest() {
+    public void postFunctionTest() {
         User user = new User("THOMAS");
         user.post("post publish message");
 
