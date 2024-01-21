@@ -91,9 +91,9 @@ public class UserTest {
         userManagement.addUser(alice);
         alice.post("alice post publish message");
 
-        thomas.shareLink(alice, 1);
+        thomas.shareLink(alice, 0);
 
-        List<String> expected = List.of("https://socialnetwork/share_posts?user=alice&postIndex=0");
+        List<String> expected = List.of("https://socialnetwork/share_posts?user=ALICE&postIndex=0");
         assertEquals(expected, thomas.fetchAllPost());
     }
 }
