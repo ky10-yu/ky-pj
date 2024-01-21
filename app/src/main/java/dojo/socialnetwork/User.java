@@ -1,9 +1,6 @@
 package dojo.socialnetwork;
 
-import jdk.jfr.DataAmount;
-
 import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.List;
 
 public class User {
