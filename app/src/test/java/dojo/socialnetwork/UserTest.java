@@ -2,6 +2,8 @@ package dojo.socialnetwork;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -62,6 +64,20 @@ public class UserTest {
 
         List<String> expected = List.of("@CHARLIE follow me");
         assertEquals(expected, charlie.fetchAllReceiveMentions());
+        assertEquals(expected, alice.fetchAllPost());
+    }
+
+    @Test
+    public void mentionedUserIsNotExistsTest() {
+        UserManagement userManagement= new UserManagement();
+        User alice = new User("ALICE");
+        User charlie = new User("CHARLIE");
+        userManagement.addUser(alice);
+        userManagement.addUser(charlie);
+        userManagement.post(alice, "@NOBODY follow me");
+
+        List<String> expected = List.of("@NOBODY follow me");
+        assertEquals(Collections.emptyList(), charlie.fetchAllReceiveMentions());
         assertEquals(expected, alice.fetchAllPost());
     }
 }
