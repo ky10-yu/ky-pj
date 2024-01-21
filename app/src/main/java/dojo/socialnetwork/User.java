@@ -25,4 +25,8 @@ public class User {
     public List<String> fetchAllPost() {
         return this.posts;
     }
+
+    public List<String> fetchOtherUsersPosts(User user) {
+        return user.fetchAllPost();
+    }
 }
